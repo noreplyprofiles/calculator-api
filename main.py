@@ -48,3 +48,41 @@ def subtract(a: str, b: str):
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
 
     return {"result": a - b}
+
+def multiply(a: str, b: str):
+    """
+    Multiply two numbers.
+
+    Parameters:
+    - a: First number
+    - b: Second number
+    
+    Returns:
+    - JSON object with the result
+    """
+    try:
+        a = float(a)
+        b = float(b)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
+
+    return {"result": a * b}
+
+def divide(a: str, b: str):
+    """
+    Divide two numbers.
+
+    Parameters:
+    - a: Dividend
+    - b: Divisor
+    
+    Returns:
+    - JSON object with the result
+    """
+    try:
+        a = float(a)
+        b = float(b)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
+
+    return {"result": a / b}
