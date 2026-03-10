@@ -1,5 +1,4 @@
 from fastapi import FastAPI, status, HTTPException
-import math
 
 app = FastAPI()
 
@@ -137,14 +136,14 @@ def area_triangle(a: str, b: str):
 
     return {"result": 1/2 * a * b}
 
-@app.get("/volume/cylinder/{a}/{b}", status_code=200)
-def volume_cylinder(a: str, b: str):
+@app.get("/modulus/{a}/{b}", status_code=200)
+def modulus(a: str, b: str):
     """
-    Calculate volume of a cylinder.
+    Calculate remainder of division of two numbers.
 
     Parameters:
-    - a: Radius
-    - b: Height
+    - a: Dividend
+    - b: Divisor
     
     Returns:
     - JSON object with the result
@@ -155,4 +154,4 @@ def volume_cylinder(a: str, b: str):
     except ValueError:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
 
-    return {"result": math.pi * a**2 * b}
+    return {"result": a % b}
