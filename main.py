@@ -86,7 +86,8 @@ def divide(a: str, b: str):
         b = float(b)
     except ValueError:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
-
+    if b == 0:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Division by zero is not allowed. Please provide a non-zero value for b.")
     return {"result": a / b}
 
 @app.get("/mean-three-nums/{a}/{b}/{c}", status_code=200)
@@ -100,7 +101,13 @@ def mean(a: str, b: str, c: str):
     Returns:
     - JSON object with the mean result
     """
-    return {"result": sum(a, b, c) / 3}
+    try:
+        a = float(a)
+        b = float(b)
+        c = float(c)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="All arguments must be valid numbers.")
+    return {"result": (a + b + c) / 3}
 
 @app.get("/area/triangle/{a}/{b}", status_code=200)
 def area_triangle(a: str, b: str):
@@ -119,7 +126,8 @@ def area_triangle(a: str, b: str):
         b = float(b)
     except ValueError:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
-
+    if a <= 0 or b <= 0:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Base and height must be positive numbers greater than zero.")
     return {"result": 1/2 * a * b}
 
 @app.get("/modulus/{a}/{b}", status_code=200)
@@ -139,5 +147,6 @@ def modulus(a: str, b: str):
         b = float(b)
     except ValueError:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Both 'a' and 'b' must be valid numbers.")
-
+    if b == 0:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Modulus by zero is not allowed. Please provide a non-zero value for b.")
     return {"result": a % b}
