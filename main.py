@@ -1,5 +1,4 @@
 from fastapi import FastAPI, status, HTTPException
-from typing import Optional
 
 app = FastAPI()
 
@@ -90,32 +89,18 @@ def divide(a: str, b: str):
 
     return {"result": a / b}
 
-@app.get("/mean/{a}/{b}/{c}/{d}/{e}", status_code=200)
-def mean(a: str, b: str, c: Optional[str] = None, d: Optional[str] = None, e: Optional[str] = None):
+@app.get("/mean-three-nums/{a}/{b}/{c}", status_code=200)
+def mean(a: str, b: str, c: str):
     """
-    Calculate the mean of 2 to 5 numbers.
+    Calculate the mean of 3 numbers.
 
     Parameters:
-    - a, b: Required numbers (as strings)
-    - c, d, e: Optional numbers (as strings)
+    - a, b, c: Required numbers (as strings)
 
     Returns:
     - JSON object with the mean result
     """
-    values = [a, b, c, d, e]
-    parsed = []
-
-    for v in values:
-        if v is not None:
-            try:
-                parsed.append(float(v))
-            except ValueError:
-                raise HTTPException(
-                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                    detail=f"'All inputs provided must be valid numbers."
-                )
-
-    return {"result": sum(parsed) / len(parsed)}
+    return {"result": sum(a, b, c) / 3}
 
 @app.get("/area/triangle/{a}/{b}", status_code=200)
 def area_triangle(a: str, b: str):
